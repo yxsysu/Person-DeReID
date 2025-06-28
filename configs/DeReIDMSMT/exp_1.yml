@@ -1,0 +1,124 @@
+FIRST: "/home/yixing/DeReID_V2/logs/msmt17_pretrain/exp_15/transformer_120.pth"
+
+MODEL:
+  PRETRAIN_CHOICE: 'imagenet'
+  PRETRAIN_PATH: '/home/yixing/pretrained_model/jx_vit_base_p16_224-80ecf9dd.pth'
+  METRIC_LOSS_TYPE: 'triplet'
+  IF_LABELSMOOTH: 'off'
+  IF_WITH_CENTER: 'no'
+  NAME: 'transformer'
+  NO_MARGIN: True
+  DEVICE_ID: ('0')
+  TRANSFORMER_TYPE: 'lora_former'
+  STRIDE_SIZE: [16, 16]
+  SIE_CAMERA: False
+  SIE_COE: 0.0
+  JPM: False
+  RE_ARRANGE: False
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]
+  PROB: 0.5 # random horizontal flip
+  RE_PROB: 0.5 # random erasing
+  PADDING: 10
+  PIXEL_MEAN: [0.5, 0.5, 0.5]
+  PIXEL_STD: [0.5, 0.5, 0.5]
+
+DATASETS:
+  NAMES: ('msmt17')
+  ROOT_DIR: ('../../data')
+
+DATALOADER:
+  SAMPLER: 'softmax_triplet'
+  NUM_INSTANCE: 4
+  NUM_WORKERS: 4
+  PIN_MEMORY: True
+
+SOLVER:
+  OPTIMIZER_NAME: 'AdamW'
+  MAX_EPOCHS: 300
+  BASE_LR: 3e-4
+  IMS_PER_BATCH: 48
+  WARMUP_METHOD: 'linear'
+  LARGE_FC_LR: False
+  CHECKPOINT_PERIOD: 20
+  LOG_PERIOD: 50
+  EVAL_PERIOD: 20
+  WEIGHT_DECAY:  0.0
+  WEIGHT_DECAY_BIAS: 0.0
+  BIAS_LR_FACTOR: 1
+  SEED: 109
+
+TEST:
+  EVAL: True
+  IMS_PER_BATCH: 256
+  RE_RANKING: False
+  WEIGHT: ''
+  NECK_FEAT: 'before'
+  FEAT_NORM: 'yes'
+
+
+TGT_LOSS:
+  METRIC_LOSS_TYPE: 'triplet'
+  NO_MARGIN: True
+  MARGIN: 0.5
+  A: 0.0
+  AUG: 1.0
+  REVERSE: 0.0
+  R_START: 0
+  AUG_DETACH: False
+
+  PROGRAD: 0.8
+
+  CAM_AUG_DETACH: False
+  CAM_NO_MARGIN: True
+  CAM_MARGIN: 0.5
+  CAM_AUG: 1.0
+  CAM: 0.5
+  REG_WEIGHT: 1.0
+  ID: 0.5
+  STYLE: 1.0
+  STYLE_MARGIN: 1.0
+
+  MEMORY: True
+  MEMORY_SIZE: 2000
+  NT_MEMORY_SIZE: 3840
+  MEMORY_CAM_M: 0.125
+  MEMORY_CAM_GAMMA: 128
+
+  MEMORY_GAMMA: 30
+  MEMORY_M: 0.3
+
+PREFIX:
+  MEM_Q: 'mlp'
+  LAM: 0.0
+  MEM: 400
+  MEM_T: 400
+  BETA: 2.0
+  NUM_ATTN: 6
+
+TGT_DATA:
+  IMS_PER_BATCH: 32
+  NUM_INSTANCE: 2
+  CAMERA_SAMPLE: False
+  MY_AUG_POOL: True
+  PID: 100
+
+LORA:
+  Q: [6, 7, 8, 9, 10, 11]
+  K: []
+  V: [6, 7, 8, 9, 10, 11]
+  PROJ: []
+  RANK: 4
+  ALPHA: 32
+  DROP: 0.00
+  LORA_NUMS: 8
+  COS_ROUTE: True
+  MLP_RANK: [0, 0, 0, 0, 0, 0, 8, 8, 8, 8, 8, 8]
+
+OUTPUT_DIR: './logs/DeReIDMSMT/exp_1'
+
+
+
+
