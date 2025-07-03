@@ -443,20 +443,13 @@ def finetune_de_reid_v2(cfg,
                         is_msmt = False
                     if 'market' in cfg.DATASETS.NAMES:
                         is_msmt = False
-                    cmc, mAP, target_cmc, target_mAP, set_cmc, set_mAP, conv_cmc, conv_mAP = evaluator.split_compute(target_raw_id, is_msmt, is_occduke, is_sysumm01)
+                    cmc, mAP, _, _, _, _, conv_cmc, conv_mAP = evaluator.split_compute(target_raw_id, is_msmt, is_occduke, is_sysumm01)
                     logger.info("Validation Results - Epoch: {}".format(0))
                     logger.info("Performance on non-target persons ")
                     logger.info("mAP: {:.1%}".format(mAP))
                     for r in [1, 5, 10]:
                         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-                    logger.info("Performance on target persons (individual verification) ")
-                    logger.info("mAP: {:.1%}".format(target_mAP))
-                    for r in [1, 5, 10]:
-                        logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, target_cmc[r - 1]))
-                    logger.info("Performance on target persons (simple cross verification) ")
-                    logger.info("mAP: {:.1%}".format(set_mAP))
-                    for r in [1, 5, 10]:
-                        logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, set_cmc[r - 1]))
+
                     logger.info("Performance on target persons (conventional verification) ")
                     logger.info("mAP: {:.1%}".format(conv_mAP))
                     for r in [1, 5, 10]:
@@ -486,7 +479,7 @@ def finetune_de_reid_v2(cfg,
                     is_msmt = False
                 if 'market' in cfg.DATASETS.NAMES:
                     is_msmt = False
-                cmc, mAP, target_cmc, target_mAP, set_cmc, set_mAP, conv_cmc, conv_mAP = evaluator.split_compute(
+                cmc, mAP, _, _, _, _, conv_cmc, conv_mAP = evaluator.split_compute(
                     target_raw_id, is_msmt, is_occduke, is_sysumm01)
 
                 logger.info("Validation Results - Epoch: {}".format(0))
@@ -494,44 +487,13 @@ def finetune_de_reid_v2(cfg,
                 logger.info("mAP: {:.1%}".format(mAP))
                 for r in [1, 5, 10]:
                     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-                logger.info("Performance on target persons (individual verification) ")
-                logger.info("mAP: {:.1%}".format(target_mAP))
-                for r in [1, 5, 10]:
-                    logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, target_cmc[r - 1]))
-                logger.info("Performance on target persons (simple cross verification) ")
-                logger.info("mAP: {:.1%}".format(set_mAP))
-                for r in [1, 5, 10]:
-                    logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, set_cmc[r - 1]))
+
                 logger.info("Performance on target persons (conventional verification) ")
                 logger.info("mAP: {:.1%}".format(conv_mAP))
                 for r in [1, 5, 10]:
                     logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, conv_cmc[r - 1]))
 
                 torch.cuda.empty_cache()
-
-                # if epoch > 140:
-                #     evaluator.reranking=True
-                #     cmc, mAP, target_cmc, target_mAP, set_cmc, set_mAP, conv_cmc, conv_mAP = evaluator.split_compute(
-                #         target_raw_id)
-                #     logger.info("Validation Results - Epoch: {}".format(0))
-                #     logger.info("Performance on non-target persons ")
-                #     logger.info("mAP: {:.1%}".format(mAP))
-                #     for r in [1, 5, 10]:
-                #         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, cmc[r - 1]))
-                #     logger.info("Performance on target persons (individual verification) ")
-                #     logger.info("mAP: {:.1%}".format(target_mAP))
-                #     for r in [1, 5, 10]:
-                #         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, target_cmc[r - 1]))
-                #     logger.info("Performance on target persons (simple cross verification) ")
-                #     logger.info("mAP: {:.1%}".format(set_mAP))
-                #     for r in [1, 5, 10]:
-                #         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, set_cmc[r - 1]))
-                #     logger.info("Performance on target persons (conventional verification) ")
-                #     logger.info("mAP: {:.1%}".format(conv_mAP))
-                #     for r in [1, 5, 10]:
-                #         logger.info("CMC curve, Rank-{:<3}:{:.1%}".format(r, conv_cmc[r - 1]))
-                #
-                #     torch.cuda.empty_cache()
 
 
 
