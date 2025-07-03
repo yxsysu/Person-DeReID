@@ -411,8 +411,8 @@ class R1_mAP_eval():
 
         print('shape of other dist mat: ', other_dist.shape)
 
-        tgt_ind_cmc, tgt_ind_mAP = v2v_eval_func(target_dist, target_q_pids.cpu().numpy(), g_pids,
-                                         target_q_camids.cpu().numpy(), g_camids)
+        # tgt_ind_cmc, tgt_ind_mAP = v2v_eval_func(target_dist, target_q_pids.cpu().numpy(), g_pids,
+        #                                  target_q_camids.cpu().numpy(), g_camids)
 
         target_conv_cmc, target_conv_mAP = eval_func(target_dist, target_q_pids.cpu().numpy(), g_pids,
                                                      target_q_camids.cpu().numpy(), g_camids)
@@ -428,13 +428,13 @@ class R1_mAP_eval():
         #                                      target_q_camids.cpu().numpy(),
         #                                      g_camids, set_g_pids.cpu().numpy(), set_q_pids.cpu().numpy())
 
-        tgt_cmc, tgt_mAP = eval_func_wo_intra(target_dist, target_q_pids.cpu().numpy(), g_pids,
-                                              target_q_camids.cpu().numpy(), g_camids)
+        # tgt_cmc, tgt_mAP = eval_func_wo_intra(target_dist, target_q_pids.cpu().numpy(), g_pids,
+        #                                       target_q_camids.cpu().numpy(), g_camids)
 
         cmc, mAP = eval_func(other_dist, other_q_pids.cpu().numpy(), g_pids,
                              other_q_camids.cpu().numpy(), g_camids)
 
-        return cmc, mAP, tgt_ind_cmc, tgt_ind_mAP, tgt_cmc, tgt_mAP, target_conv_cmc, target_conv_mAP
+        return cmc, mAP, None, None, None, None, target_conv_cmc, target_conv_mAP
 
 
     def split_eval(self, target, data_centroid, is_msmt=True, is_occduke=False, is_sysumm01=False):  # called after each epoch
